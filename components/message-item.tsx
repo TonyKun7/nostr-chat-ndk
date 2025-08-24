@@ -18,6 +18,7 @@ type MessageItemProps = {
 
 const CASHU_REGEX = /(cashu\S{10,})(?=\s|$)/i
 const LIGHTNING_REGEX = /(lnbc\S{10,})(?=\s|$)/i
+const LINK_REGEX = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/+&@#%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/+&@#%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/+&@#%=~_|$?!:,.]*\)|[A-Z0-9+&@#/+&@#%=~_|$])/i
 
 function areEqual(prevProps: MessageItemProps, nextProps: MessageItemProps) {
     return prevProps.event.id === nextProps.event.id && prevProps.event.content === nextProps.event.content
@@ -52,6 +53,34 @@ export const MessageItem = memo(function MessageItem({ event }: MessageItemProps
         } catch (error) {
             console.error("Failed to decode lightning invoice:", error)
         }
+    }
+
+    function renderContentWithLinks(content: string) {
+        const parts = content.split(LINK_REGEX)
+        const matches = content.match(LINK_REGEX)
+
+        let result: React.ReactNode[] = []
+        for (let i = 0; i < parts.length; i++) {
+            result.push(<span key={`text-${i}`}>{parts[i]}</span>)
+            if (matches && matches[i]) {
+                let url = matches[i]
+                if (!/^https?:\/\//i.test(url)) {
+                    url = "https://" + url
+                }
+                result.push(
+                    <a
+                        key={`link-${i}`}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline break-all"
+                    >
+                        {matches[i]}
+                    </a>,
+                )
+            }
+        }
+        return result
     }
 
     let username: string | undefined
@@ -117,7 +146,7 @@ export const MessageItem = memo(function MessageItem({ event }: MessageItemProps
                     </div>
                 </div>
             ) : (
-                <div className="text-base break-all whitespace-pre-wrap">{event.content}</div>
+                <div className="text-base break-all whitespace-pre-wrap">{renderContentWithLinks(event.content)}</div>
             )}
         </div>
     )
