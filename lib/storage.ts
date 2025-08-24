@@ -53,13 +53,13 @@ class Storage {
 
     public getFavorites(): string[] {
         const stored = this.getItem("favorites")
-        if (!stored) return ["21m"] // Default favorites
+        if (!stored) return ["bc_21m"] // Default favorites
         try {
             const parsed = JSON.parse(stored)
             return Array.isArray(parsed) ? parsed : ["21m"]
         } catch (error) {
             console.warn("Failed to parse favorites from localStorage:", error)
-            return ["21m"]
+            return ["bc_21m"]
         }
     }
 
@@ -105,7 +105,7 @@ class Storage {
 
     public clearAll(): void {
         this.removePubkey()
-        this.setFavorites(["21m"])
+        this.setFavorites(["bc_21m"])
     
         if (!this.isClient) return
         try {
