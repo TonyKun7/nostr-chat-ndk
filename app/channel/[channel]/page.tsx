@@ -18,7 +18,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 
 const ListWithGap = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-    (props, ref) => <div {...props} ref={ref} className="flex flex-col gap-4" />,
+    (props, ref) => <div {...props} ref={ref} className="flex flex-col gap-4 pr-4" />,
 )
 ListWithGap.displayName = "ListWithGap"
 
@@ -100,6 +100,7 @@ export default function Page() {
                             <Virtuoso<NDKEvent>
                                 style={{ height: "100%" }}
                                 data={displayedMessages}
+                                className="scrollbar-always"
                                 computeItemKey={item => item}
                                 itemContent={(index, event) => (
                                     <div className="flex items-start gap-3 p-3 rounded bg-muted">
