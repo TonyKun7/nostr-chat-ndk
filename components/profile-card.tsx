@@ -1,36 +1,54 @@
-"use client";
+"use client"
 
-import { User, Globe, Mail, Key, ExternalLink, Copy, Check, Zap } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { useProfileValue } from "@nostr-dev-kit/ndk-hooks";
+import { User, Globe, Mail, Key, ExternalLink, Copy, Check, Zap } from "lucide-react"
+import Image from "next/image"
+import { useState } from "react"
+import { useNDK, useProfileValue } from "@nostr-dev-kit/ndk-hooks"
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+
+import { useDisplayName } from "@/hooks/useProfile"
 
 type ProfileCardProps = {
-    pubkey: string;
-    profile?: ReturnType<typeof useProfileValue>;
-    children: React.ReactNode;
-};
+    pubkey: string
+    profile?: ReturnType<typeof useProfileValue>
+    children: React.ReactNode
+}
 
 export function ProfileCard({ pubkey, profile, children }: ProfileCardProps) {
-    const [copied, setCopied] = useState(false);
+    const displayName = useDisplayName(pubkey, "Utilisateur anonyme")
+    const { ndk } = useNDK()
+
+    const truncatedPubkeyhex = `${pubkey.slice(0, 8)}...${pubkey.slice(-8)}`
+    const npub = ndk?.getUser({ pubkey: pubkey }).npub
+    const truncatedNpub = `${npub?.slice(0, 4)}...${npub?.slice(-4)}`
+
+    const [copiedPubkey, setCopiedPubkey] = useState(false)
+    const [copiedNpub, setCopiedNpub] = useState(false)
 
     const handleCopyPubkey = async () => {
         try {
-            await navigator.clipboard.writeText(pubkey);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+            await navigator.clipboard.writeText(pubkey)
+            setCopiedPubkey(true)
+            setTimeout(() => setCopiedPubkey(false), 2000)
         } catch (error) {
-            console.error('Erreur lors de la copie:', error);
+            console.error('Erreur lors de la copie:', error)
         }
-    };
+    }
 
-    const displayName = profile?.displayName || profile?.display_name || profile?.name || "Utilisateur anonyme";
-    const truncatedPubkey = `${pubkey.slice(0, 8)}...${pubkey.slice(-8)}`;
+    const handleCopyNpub = async () => {
+        try {
+            await navigator.clipboard.writeText(npub ? npub : '')
+            setCopiedNpub(true)
+            setTimeout(() => setCopiedNpub(false), 2000)
+        } catch (error) {
+            console.error('Erreur lors de la copie:', error)
+        }
+    }
+
 
     return (
         <Popover>
@@ -82,10 +100,20 @@ export function ProfileCard({ pubkey, profile, children }: ProfileCardProps) {
                             <div className="flex items-center gap-2 mb-3">
                                 <Badge variant="secondary" className="font-mono text-xs flex-1">
                                     <Key className="w-3 h-3 mr-1" />
-                                    {truncatedPubkey}
+                                    {truncatedPubkeyhex}
                                 </Badge>
                                 <Button variant="ghost" size="sm" onClick={handleCopyPubkey} className="h-6 w-6 p-0" >
-                                    {copied ? <Check className="w-3 h-3 text-green-600" /> : <Copy className="w-3 h-3" />}
+                                    {copiedPubkey ? <Check className="w-3 h-3 text-green-600" /> : <Copy className="w-3 h-3" />}
+                                </Button>
+                            </div>
+
+                            <div className="flex items-center gap-2 mb-3">
+                                <Badge variant="secondary" className="font-mono text-xs flex-1">
+                                    <Key className="w-3 h-3 mr-1" />
+                                    {truncatedNpub}
+                                </Badge>
+                                <Button variant="ghost" size="sm" onClick={handleCopyNpub} className="h-6 w-6 p-0" >
+                                    {copiedNpub ? <Check className="w-3 h-3 text-green-600" /> : <Copy className="w-3 h-3" />}
                                 </Button>
                             </div>
 
@@ -128,5 +156,5 @@ export function ProfileCard({ pubkey, profile, children }: ProfileCardProps) {
                 )}
             </PopoverContent>
         </Popover>
-    );
+    )
 }

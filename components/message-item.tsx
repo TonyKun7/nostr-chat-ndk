@@ -10,8 +10,9 @@ import { decode } from "bolt11"
 import { ProfileCard } from "@/components/profile-card"
 import { Button } from "@/components/ui/button"
 
-import type { NostrEvent } from "@nostr-dev-kit/ndk"
 import { useDisplayName } from "@/hooks/useProfile"
+
+import type { NostrEvent } from "@nostr-dev-kit/ndk"
 
 type MessageItemProps = {
     event: NostrEvent;
@@ -91,8 +92,13 @@ export const MessageItem = memo(function MessageItem({ event }: MessageItemProps
         <div className="flex flex-col" key={event.id}>
             <div className="flex items-center gap-2 font-medium">
                 <ProfileCard pubkey={event.pubkey} profile={profile}>
-                    <button className="text-lg hover:underline cursor-pointer">
+                    <button className="text-lg cursor-pointer flex items-center gap-1">
                         {username}
+                        {profile ? (
+                            <span className="relative flex items-center">
+                                <Image src="/nostr.png" alt="Nostr" className="h-4 w-4 ml-1" width={16} height={16} />
+                            </span>
+                        ) : null}
                     </button>
                 </ProfileCard>
                 <span className="text-xs text-muted-foreground">
