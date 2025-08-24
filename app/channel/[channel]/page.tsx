@@ -16,7 +16,11 @@ import { Button } from "@/components/ui/button"
 import { useNostrEvents } from "@/context/Nostr"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
+import { EmojiPicker, EmojiPickerContent, EmojiPickerFooter, EmojiPickerSearch } from "@/components/ui/emoji-picker"
+import { Popover, PopoverTrigger  } from "@/components/ui/popover"
+
 import { useDisplayName } from "@/hooks/useProfile"
+import { PopoverContent } from "@radix-ui/react-popover"
 
 const ListWithGap = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
     (props, ref) => <div {...props} ref={ref} className="flex flex-col gap-4 pr-4" />,
@@ -133,6 +137,27 @@ export default function Page() {
                                 style={!pubkey ? { opacity: 0.5, pointerEvents: "none" } : {}}
                             />
                         </div>
+
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" type="button" className="px-6 py-2" disabled={!pubkey}>
+                                    😀
+                                </Button>
+                            </PopoverTrigger>
+
+                            <PopoverContent className="w-fit p-0" onClick={e => e.preventDefault()}>
+                                <EmojiPicker
+                                    className="h-[342px]"
+                                    onEmojiSelect={({ emoji }) => {
+                                        setInput(prev => prev + emoji)
+                                    }}
+                                >
+                                    <EmojiPickerSearch />
+                                    <EmojiPickerContent className="text-81xl" />
+                                    <EmojiPickerFooter />
+                                </EmojiPicker>
+                            </PopoverContent>
+                        </Popover>
 
                         <Button variant="outline" type="submit" className="px-6 py-2" disabled={!pubkey}>
                             Send
