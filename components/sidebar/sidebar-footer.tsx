@@ -74,7 +74,7 @@ export const AppSidebarFooter = memo(function AppSidebarFooter({
                 <Signin />
             )}
             <div className="mt-2 text-xs text-muted-foreground text-center">
-                Version 1.0.0
+                Version 1.1.0
             </div>
         </SidebarFooter>
     )
