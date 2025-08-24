@@ -1,103 +1,103 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import Link from "next/link"
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
+
+export default function HomePage() {
+    return (
+        <main className="flex min-h-screen items-center justify-center bg-background px-2">
+            <Card className="w-full max-w-6xl shadow-lg">
+                <CardHeader>
+                    <CardTitle className="text-4xl font-bold mb-2 text-center">Nostr Chat NDK</CardTitle>
+                    <p className="text-muted-foreground text-center">
+                        Decentralized instant messaging — open source, privacy, resilience, freedom of speech.
+                    </p>
+                </CardHeader>
+                <Separator className="my-6" />
+                <CardContent>
+                    <div className="flex flex-col gap-8 md:flex-row md:gap-12">
+                        <div className="flex-1 flex flex-col gap-8">
+                            <section>
+                                <h2 className="text-2xl font-semibold mb-2">Main Features</h2>
+                                <ul className="list-disc ml-6 space-y-1">
+                                    <li>Real-time chat on Nostr channels</li>
+                                    <li>Secure login with your Nostr key</li>
+                                    <li>Unread message tracking per channel</li>
+                                    <li>Favorites: mark and quickly find your favorite channels</li>
+                                    <li>Modern interface: light/dark themes, responsive design, badges, auto-scroll</li>
+                                    <li>Multi-relay support for resilience</li>
+                                </ul>
+                            </section>
+                            <section>
+                                <h2 className="text-2xl font-semibold mb-2">Why choose Nostr Chat NDK?</h2>
+                                <ul className="list-disc ml-6 space-y-1">
+                                    <li>No central server: your exchanges are not controlled or stored by a third party</li>
+                                    <li>Open source: anyone can review the code, contribute, or propose improvements</li>
+                                    <li>Privacy: no accounts, no ads, no tracking</li>
+                                    <li>Resistant to censorship and outages</li>
+                                </ul>
+                            </section>
+                        </div>
+                        <div className="flex-1 flex flex-col gap-8">
+                            <section>
+                                <h2 className="text-2xl font-semibold mb-2">Relays Used</h2>
+                                <ul className="list-disc ml-6 space-y-1">
+                                    <li><code>wss://relay.primal.net</code></li>
+                                    <li><code>wss://relay.damus.io</code></li>
+                                    <li><code>wss://nos.lol</code></li>
+                                    <li><code>wss://relay.snort.social</code></li>
+                                </ul>
+                            </section>
+                            <section>
+                                <h2 className="text-2xl font-semibold mb-2">Nostr Kinds Listened To</h2>
+                                <p>
+                                    The application focuses on channel chat-specific kinds:
+                                </p>
+                                <ul className="list-disc ml-6 space-y-1">
+                                    <li><b>Kind 20000 and 23333</b>: Nostr channel message events</li>
+                                </ul>
+                                <p className="mt-2 text-muted-foreground">
+                                    These kinds enable efficient conversation handling and advanced social features.
+                                </p>
+                            </section>
+                            <section className="text-center mt-8">
+                                <h2 className="text-2xl font-semibold mb-2">Open Source</h2>
+                                <p>
+                                    Check out the code, share ideas, or contribute on&nbsp;:
+                                </p>
+                                <Button asChild className="mt-4 w-full">
+                                    <Link href="https://github.com/TonyKun7/nostr-chat-ndk" target="_blank" rel="noopener">
+                                        View GitHub Repo
+                                    </Link>
+                                </Button>
+                            </section>
+                        </div>
+                    </div>
+                    <Separator className="my-8" />
+                    <section className="text-center">
+                        <h2 className="text-2xl font-semibold mb-2">Support the Project</h2>
+                        <p>
+                            If you enjoy Nostr Chat NDK, you can support development by sending a Lightning donation&nbsp;:
+                        </p>
+                        <div className="mt-4 flex flex-col items-center justify-center">
+                            <span className="font-mono bg-muted px-4 py-2 rounded-lg text-lg mb-2">
+                                ⚡ <b>tonykun@coinos.io</b>
+                            </span>
+                            <Button asChild variant="outline" className="w-fit">
+                                <a href="https://coinos.io/tonykun" target="_blank" rel="noopener">
+                                    Send a Lightning Donation
+                                </a>
+                            </Button>
+                        </div>
+                        <p className="mt-2 text-muted-foreground text-sm">
+                            Lightning address (LNURL) compatible with all apps and wallets. Thanks for your support!
+                        </p>
+                    </section>
+                </CardContent>
+            </Card>
+        </main>
+    )
 }
