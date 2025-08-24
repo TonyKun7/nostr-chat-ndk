@@ -46,6 +46,11 @@ export function ProfileCard({ pubkey, profile, children }: ProfileCardProps) {
 
             <PopoverContent className="w-80 p-4 overflow-hidden" side="right" align="start" sideOffset={8} collisionPadding={10}>
                 <div className="p-4 relative">
+                    {profile?.banner && (
+                        <div className="relative h-20 overflow-hidden mb-3">
+                            <Image src={profile.banner} alt="Bannière du profil" fill className="object-cover opacity-80 rounded-xl" />
+                        </div>
+                    )}
                     <div className="flex items-start gap-3 mb-4">
                         <div className="relative">
                             <div className="w-12 h-12 rounded-full p-0.5">
@@ -57,11 +62,6 @@ export function ProfileCard({ pubkey, profile, children }: ProfileCardProps) {
                                     </div>
                                 )}
                             </div>
-                            {profile?.nip05 && (
-                                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                                    <Check className="w-2 h-2 text-white" />
-                                </div>
-                            )}
                         </div>
                         <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-foreground mb-1 truncate">
@@ -89,11 +89,6 @@ export function ProfileCard({ pubkey, profile, children }: ProfileCardProps) {
                             {copiedNpub ? <Check className="w-3 h-3 text-green-600" /> : <Copy className="w-3 h-3" />}
                         </Button>
                     </div>
-                    {profile?.banner && (
-                        <div className="relative h-20 overflow-hidden mb-3">
-                            <Image src={profile.banner} alt="Bannière du profil" fill className="object-cover opacity-80 rounded-xl" />
-                        </div>
-                    )}
                     {profile?.about && (
                         <div className="mb-3">
                             <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
