@@ -11,6 +11,8 @@ import { Signin } from "@/components/signin"
 import { storage } from "@/lib/storage"
 
 import { useProfile } from "@/hooks/useProfile"
+
+import packageJson from "../../package.json"
 interface SidebarFooterProps {
   hasPubkey: boolean;
   pubkey: string | null;
@@ -74,7 +76,7 @@ export const AppSidebarFooter = memo(function AppSidebarFooter({
                 <Signin />
             )}
             <div className="mt-2 text-xs text-muted-foreground text-center">
-                Version 1.1.0
+                Version {packageJson.version}
             </div>
         </SidebarFooter>
     )
