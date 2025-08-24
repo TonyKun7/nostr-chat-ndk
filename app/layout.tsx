@@ -17,15 +17,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" className="h-screen dark overflow-hidden" suppressHydrationWarning>
-            <body className="w-screen h-screen overflow-hidden">
+        <html lang="en" className="h-screen dark" suppressHydrationWarning>
+            <body className="w-screen h-screen">
                 <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
                     <SidebarProvider>
                         <NostrEventsProvider>
                             <FavoritesProvider>
-                                <div className="flex h-full w-full overflow-hidden">
+                                <div className="flex h-full w-full">
                                     <AppSideBar />
-                                    <main className="flex-1 flex flex-col h-full overflow-hidden">
+                                    <main className="flex-1 flex flex-col h-full">
                                         <NDKHeadless />
                                         {children}
                                     </main>

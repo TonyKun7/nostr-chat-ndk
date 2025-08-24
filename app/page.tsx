@@ -5,12 +5,14 @@ import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export default function HomePage() {
     return (
         <main className="flex min-h-screen items-center justify-center bg-background px-2">
             <Card className="w-full max-w-6xl shadow-lg">
                 <CardHeader>
+                    <SidebarTrigger variant="outline" className="h-12 w-12" />
                     <CardTitle className="text-4xl font-bold mb-2 text-center">Nostr Chat NDK</CardTitle>
                     <p className="text-muted-foreground text-center">
                         Decentralized instant messaging — open source, privacy, resilience, freedom of speech.
