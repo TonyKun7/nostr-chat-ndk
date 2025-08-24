@@ -18,6 +18,7 @@ export function useProfile({ pubkey, fallbackName = "Anonymous User" }: UseProfi
 
         return {
             name: rawProfile.name,
+            pubkey: rawProfile.pubkey,
             display_name: typeof rawProfile.display_name === "string" ? rawProfile.display_name : typeof rawProfile.displayName === "string" ? rawProfile.displayName : undefined,
             displayName: typeof rawProfile.displayName === "string" ? rawProfile.displayName : typeof rawProfile.display_name === "string" ? rawProfile.display_name : undefined,
             about: rawProfile.about,
@@ -65,9 +66,12 @@ export function useProfile({ pubkey, fallbackName = "Anonymous User" }: UseProfi
 
 export function useDisplayName(pubkey?: string, fallback = "Anonymous User"): string {
     const { profile } = useProfile({ pubkey, fallbackName: fallback })
-  
+
     return useMemo(() => {
         if (!profile) return fallback
-        return profile.displayName || profile.display_name || profile.name || fallback
-    }, [profile, fallback])
+        if (profile.displayName || profile.display_name || profile.name) {
+            return profile.displayName ?? profile.display_name ?? profile.name ?? fallback
+        }
+        return "anon#" + (pubkey?.slice(-4) ?? "")
+    }, [profile, pubkey, fallback])
 }

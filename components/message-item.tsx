@@ -11,6 +11,7 @@ import { ProfileCard } from "@/components/profile-card"
 import { Button } from "@/components/ui/button"
 
 import type { NostrEvent } from "@nostr-dev-kit/ndk"
+import { useDisplayName } from "@/hooks/useProfile"
 
 type MessageItemProps = {
     event: NostrEvent;
@@ -26,6 +27,7 @@ function areEqual(prevProps: MessageItemProps, nextProps: MessageItemProps) {
 
 export const MessageItem = memo(function MessageItem({ event }: MessageItemProps) {
     const profile = useProfileValue(event.pubkey)
+    const username = useDisplayName(event.pubkey)
 
     let cashu = ""
     let lightning = ""
@@ -81,16 +83,6 @@ export const MessageItem = memo(function MessageItem({ event }: MessageItemProps
             }
         }
         return result
-    }
-
-    let username: string | undefined
-
-    if (event.tags.find(tag => tag[0] == "n")) {
-        username = event.tags.find(tag => tag[0] == "n")?.[1] + "#" + event.pubkey.slice(event.pubkey.length - 4)
-    } else if(profile) {
-        username = [profile?.displayName, profile?.display_name, profile?.name].find(val => typeof val === "string" && val.length > 0) as string | undefined
-    } else {
-        username = "anon" + event.pubkey.slice(event.pubkey.length - 4)
     }
 
     return (

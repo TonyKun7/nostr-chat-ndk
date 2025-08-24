@@ -10,7 +10,7 @@ import { Signin } from "@/components/signin"
 
 import { storage } from "@/lib/storage"
 
-import { useProfile } from "@/hooks/useProfile"
+import { useDisplayName, useProfile } from "@/hooks/useProfile"
 
 import packageJson from "../../package.json"
 interface SidebarFooterProps {
@@ -26,6 +26,7 @@ export const AppSidebarFooter = memo(function AppSidebarFooter({
         pubkey: pubkey ?? undefined,
         fallbackName: "Anonymous User",
     })
+    const username = useDisplayName(pubkey ?? undefined)
 
     const { setTheme } = useTheme()
     const router = useRouter()
@@ -42,8 +43,6 @@ export const AppSidebarFooter = memo(function AppSidebarFooter({
         router.push(`/channel/${channel}`)
     }
 
-    const displayName = profile?.displayName || profile?.display_name || profile?.name || "Anonymous User"
-
     return (
         <SidebarFooter>
             <div className="border-t border-muted my-2" />
@@ -54,7 +53,7 @@ export const AppSidebarFooter = memo(function AppSidebarFooter({
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton>
                                     <User2 />
-                                    {displayName}
+                                    {username}
                                     <ChevronUp className="ml-auto" />
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>

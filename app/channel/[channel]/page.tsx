@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { useNostrEvents } from "@/context/Nostr"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
+import { useDisplayName } from "@/hooks/useProfile"
 
 const ListWithGap = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
     (props, ref) => <div {...props} ref={ref} className="flex flex-col gap-4 pr-4" />,
@@ -27,7 +28,8 @@ export default function Page() {
     const channel = params.channel as string
     const { events } = useNostrEvents()
     const { ndk } = useNDK()
-    const hasPubkey = typeof window !== "undefined" && !!localStorage.getItem("pubkey")
+    const pubkey = typeof window !== "undefined" ? localStorage.getItem("pubkey") : null
+    const username = useDisplayName(pubkey ?? undefined)
 
     const isGeoHash = channel.startsWith("bc_")
 
@@ -66,7 +68,7 @@ export default function Page() {
         const tag = isGeoHash ? "g" : "d"
         const room = isGeoHash ? channel.split("bc_")[1] : channel
 
-        const tags = [[tag, room]]
+        const tags = [[tag, room], ["n", username]]
 
         if (ndk) {
             const event = new NDKEvent(ndk, { kind, content: input, tags })
@@ -108,6 +110,7 @@ export default function Page() {
                                     </div>
                                 )}
                                 followOutput="smooth"
+                                initialTopMostItemIndex={displayedMessages.length > 0 ? displayedMessages.length - 1 : 0}
                                 components={{ List: ListWithGap }}
                             />
                         )}
@@ -126,12 +129,12 @@ export default function Page() {
                                 placeholder="Write your message…"
                                 value={input}
                                 onChange={e => setInput(e.target.value)}
-                                disabled={!hasPubkey}
-                                style={!hasPubkey ? { opacity: 0.5, pointerEvents: "none" } : {}}
+                                disabled={!pubkey}
+                                style={!pubkey ? { opacity: 0.5, pointerEvents: "none" } : {}}
                             />
                         </div>
 
-                        <Button variant="outline" type="submit" className="px-6 py-2" disabled={!hasPubkey}>
+                        <Button variant="outline" type="submit" className="px-6 py-2" disabled={!pubkey}>
                             Send
                         </Button>
                     </form>
