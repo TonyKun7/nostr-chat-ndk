@@ -71,7 +71,7 @@ export function useDisplayName(pubkey?: string, fallback = "Anonymous User", tag
         if (profile?.displayName || profile?.display_name || profile?.name) {
             return profile.displayName ?? profile.display_name ?? profile.name ?? fallback
         } else if (tagName) {
-            return tagName
+            return tagName + "#" + (pubkey?.slice(-4) ?? "undefined")
         }
 
         return "anon#" + (pubkey?.slice(-4) ?? "") || fallback
