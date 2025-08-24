@@ -64,14 +64,16 @@ export function useProfile({ pubkey, fallbackName = "Anonymous User" }: UseProfi
     }
 }
 
-export function useDisplayName(pubkey?: string, fallback = "Anonymous User"): string {
+export function useDisplayName(pubkey?: string, fallback = "Anonymous User", tagName?: string): string {
     const { profile } = useProfile({ pubkey, fallbackName: fallback })
 
     return useMemo(() => {
-        if (!profile) return fallback
-        if (profile.displayName || profile.display_name || profile.name) {
+        if (profile?.displayName || profile?.display_name || profile?.name) {
             return profile.displayName ?? profile.display_name ?? profile.name ?? fallback
+        } else if (tagName) {
+            return tagName
         }
-        return "anon#" + (pubkey?.slice(-4) ?? "")
-    }, [profile, pubkey, fallback])
+
+        return "anon#" + (pubkey?.slice(-4) ?? "") || fallback
+    }, [profile, pubkey, tagName, fallback])
 }

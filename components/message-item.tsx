@@ -27,7 +27,9 @@ function areEqual(prevProps: MessageItemProps, nextProps: MessageItemProps) {
 
 export const MessageItem = memo(function MessageItem({ event }: MessageItemProps) {
     const profile = useProfileValue(event.pubkey)
-    const username = useDisplayName(event.pubkey)
+    const nTag = event.tags.find(t => t[0] === "n" && t[1])?.[1]
+
+    const username = useDisplayName(event.pubkey, undefined, nTag)
 
     let cashu = ""
     let lightning = ""
