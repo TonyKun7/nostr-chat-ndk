@@ -17,7 +17,7 @@ interface SidebarChannelGroupProps {
 export const SidebarChannelGroup = memo(function SidebarChannelGroup({ group, events, mounted }: SidebarChannelGroupProps) {
 
     return (
-        <Collapsible key={group.title} className="group/collapsible">
+        <Collapsible key={group.title} className="group/collapsible" defaultOpen>
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                     <SidebarMenuButton>
