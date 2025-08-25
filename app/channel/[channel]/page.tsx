@@ -147,7 +147,7 @@ export default function Page() {
 
                             <PopoverContent className="w-fit p-0" onClick={e => e.preventDefault()}>
                                 <EmojiPicker
-                                    className="h-[342px]"
+                                    className="h-[342px] mr-8"
                                     onEmojiSelect={({ emoji }) => {
                                         setInput(prev => prev + emoji)
                                     }}

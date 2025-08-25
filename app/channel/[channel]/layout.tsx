@@ -5,7 +5,6 @@ type Props = {
   params: Promise<{ channel: string }>
 }
 
-// Générer dynamiquement le titre
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { channel } = await params
     return {
@@ -16,7 +15,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 }
 
-// Layout Server Component
 export default function ChannelLayout({ children }: Props) {
     return <>{children}</>
 }
