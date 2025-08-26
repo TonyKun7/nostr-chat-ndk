@@ -53,10 +53,10 @@ class Storage {
 
     public getFavorites(): string[] {
         const stored = this.getItem("favorites")
-        if (!stored) return ["bc_21m"] // Default favorites
+        if (!stored) return ["bc_21m"]
         try {
             const parsed = JSON.parse(stored)
-            return Array.isArray(parsed) ? parsed : ["21m"]
+            return Array.isArray(parsed) ? parsed : ["bc_21m"]
         } catch (error) {
             console.warn("Failed to parse favorites from localStorage:", error)
             return ["bc_21m"]

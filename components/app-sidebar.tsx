@@ -60,7 +60,7 @@ export function AppSideBar() {
         <Sidebar collapsible="offcanvas" variant="floating">
             <AppSidebarHeader />
 
-            <SidebarContent className="pl-4">
+            <SidebarContent className="p-2">
                 <SidebarMenu>
                     {channelGroups.map(group => (
                         <SidebarChannelGroup key={group.title} group={group} events={events} mounted={mounted} />

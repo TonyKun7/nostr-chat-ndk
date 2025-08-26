@@ -18,14 +18,7 @@ interface SidebarFooterProps {
   pubkey: string | null;
 }
 
-export const AppSidebarFooter = memo(function AppSidebarFooter({
-    hasPubkey,
-    pubkey,
-}: SidebarFooterProps) {
-    const { profile } = useProfile({
-        pubkey: pubkey ?? undefined,
-        fallbackName: "Anonymous User",
-    })
+export const AppSidebarFooter = memo(function AppSidebarFooter({ hasPubkey, pubkey }: SidebarFooterProps) {
     const username = useDisplayName(pubkey ?? undefined)
 
     const { setTheme } = useTheme()
